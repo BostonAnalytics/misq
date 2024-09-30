@@ -1,11 +1,9 @@
 ---
 title: Untitled
 format:
-  misq-html: default
   misq-pdf:
-    keep-tex: true
-
-date: last-modified
+    keep-tex: false
+  misq-html: default
 author:
   - name: John Doe
     affiliations:
@@ -21,7 +19,16 @@ author:
     url: https://example.org/
   - name: his friend
     affiliations:
-      - Another Affiliation
+      - name: Dummy org
+        department: Cool Dep
+        address: Somewhere
+        city: Magic city
+        country: best one
+        postal-code: 9999
+      - Demo Journal
+    orcid: 0000-0000-0000-0000
+    email: JD@example.org
+    url: https://example.org/
 abstract: |
   This document is only a demo explaining how to use the template.
 keywords: [template, demo]
