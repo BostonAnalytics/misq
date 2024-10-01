@@ -1,9 +1,9 @@
 ---
 title: Untitled
 format:
-  misq-html: default
   misq-pdf:
     keep-tex: true
+  misq-html: default
   misq-docx: default
 
 date: last-modified
