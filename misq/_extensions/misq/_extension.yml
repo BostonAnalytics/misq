@@ -42,4 +42,11 @@ contributes:
     html:
       toc: true
       theme: [yeti, custom.scss]
+    docx:
+      reference-doc: "_docreference/misqdoc.docx"
+      knitr:
+        opts_chunk:
+          dev: "ragg_png"
+          dpi: 300
+          out.width: "80%"
 
