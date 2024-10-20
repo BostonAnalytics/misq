@@ -4,7 +4,7 @@
 \PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
 %
 \documentclass[
-  review]{misq}
+]{misq}
 
 \usepackage{amsmath,amssymb}
 \usepackage{iftex}
@@ -154,29 +154,28 @@
   pdfcreator={LaTeX via pandoc}}
 
 
-  \title{Untitled}
 
-  \subtitle{A template for MISQ}
-
-\author{  \textbf{\normalsize John Doe} % Author name in bold
-  ~\orcidlink{0000-0000-0000-0000} % ORCID link if available
-  \\{\small Dummy org}\\{\small Demo
-Journal} % Affiliations in small font
-  \\\href{mailto:JD@example.org}{\small\textit{JD@example.org}} % Email in italics
-\and   \textbf{\normalsize his friend} % Author name in bold
-  ~\orcidlink{0000-0000-0000-0000} % ORCID link if available
-  \\{\small Dummy org}\\{\small Demo
-Journal} % Affiliations in small font
-  \\\href{mailto:JD@example.org}{\small\textit{JD@example.org}} % Email in italics
-\and   \textbf{\normalsize his friend} % Author name in bold
-  ~\orcidlink{0000-0000-0000-0000} % ORCID link if available
-  \\{\small Dummy org}\\{\small Demo
-Journal} % Affiliations in small font
-  \\\href{mailto:JD@example.org}{\small\textit{JD@example.org}} % Email in italics
+\title{Untitled}
+\author{
+\textbf{\normalsize John Doe} % Author name in bold and normal size
+~\orcidlink{0000-0000-0000-0000} % ORCID link if available
+\\{\normalsize Dummy org}\\{\normalsize Demo
+Journal} % Affiliations in normal font
+\\\href{mailto:JD@example.org}{\normalsize\textit{JD@example.org}} % Email in italic
+\and 
+\textbf{\normalsize his friend} % Author name in bold and normal size
+~\orcidlink{0000-0000-0000-0000} % ORCID link if available
+\\{\normalsize Dummy org}\\{\normalsize Demo
+Journal} % Affiliations in normal font
+\\\href{mailto:JD@example.org}{\normalsize\textit{JD@example.org}} % Email in italic
+\and 
+\textbf{\normalsize his friend} % Author name in bold and normal size
+~\orcidlink{0000-0000-0000-0000} % ORCID link if available
+\\{\normalsize Dummy org}\\{\normalsize Demo
+Journal} % Affiliations in normal font
+\\\href{mailto:JD@example.org}{\normalsize\textit{JD@example.org}} % Email in italic
 }
-
-  \date{\normalsize2024-10-19}
-
+\date{\normalsize2024-10-19}
 \begin{document}
 \maketitle
 \begin{abstract}

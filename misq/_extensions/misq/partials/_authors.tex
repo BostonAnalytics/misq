@@ -1,14 +1,8 @@
-$-- You can use as many custom partials as you need. Convention is to prefix name with '_'
-$-- It can be useful to use such template to split some template parts in smaller pieces, which is easier to reuse. 
-$-- This '_custom.tex' is used on 'title.tex' as example.
-$-- See other existing format in quarto-journals/ organisation.
-$-- %%%% TODO %%%%%
-$-- Use it if you need to insert content at this specific place of the main Pandoc's template. Otherwise, remove it.
-$-- Here we are using it to format the authors part of the template.
-$-- %%%%%%%%%%%%%%%
-
-\textbf{\normalsize $it.name.literal$} % Author name in bold and normal size
-$if(it.orcid)$~\orcidlink{$it.orcid$}$endif$ % ORCID link if available
-$for(it.affiliations)$\\{\normalsize $it.name$}$endfor$ % Affiliations in normal font
-\\$if(it.email)$\href{mailto:$it.email$}{\normalsize\textit{$it.email$}}$endif$ % Email in italic
-
+$if(doubleblind)$
+  \textbf{Anonymous Author(s)}
+$else$
+  \textbf{\normalsize $it.name.literal$} % Author name in bold
+  $if(it.orcid)$~\orcidlink{$it.orcid$}$endif$ % ORCID link if available
+  $for(it.affiliations)$\\{\small $it.name$}$endfor$ % Affiliations in small font
+  \\$if(it.email)$\href{mailto:$it.email$}{\small\textit{$it.email$}}$endif$ % Email in italics
+$endif$

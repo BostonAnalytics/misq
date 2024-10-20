@@ -1,134 +1,137 @@
-%%
-%% Updated template for KOMA-Script’s `scrartcl` class.
-%% Uses newtxtext and newtxmath with \Bbbk conflict suppressed.
-%%
+% misq.cls - MIS Quarterly Class File
 \NeedsTeXFormat{LaTeX2e}[2021/06/01]
-\ProvidesClass{scrartcl}
-              [2022/10/04 v3.36 KOMA-Script Article Class]
+\ProvidesClass{misq}[2024/10/19 MISQ Manuscript Class]
 
-%% Load KOMA-Script and define options
+% Load KOMA-Script article class
 \LoadClassWithOptions{scrartcl}
 
-%% Declare options
-\DeclareOption{a4paper}{\KOMAoptions{paper=a4}}
-\DeclareOption{letterpaper}{\KOMAoptions{paper=letter}}
-\DeclareOption{11pt}{\KOMAoptions{fontsize=11pt}}
-\DeclareOption{12pt}{\KOMAoptions{fontsize=12pt}}
-\DeclareOption{twoside}{\KOMAoptions{twoside=true}}
-\DeclareOption{oneside}{\KOMAoptions{twoside=false}} %% Corrected the `oneside` option
+% Options for different modes
+\newif\ifpreprint
+\newif\ifreview
+\newif\iffinal
+\newif\ifdoubleblind
 
-%% Set default options
-\ExecuteOptions{letterpaper,10pt,twoside,onecolumn,final}
+\def\@spacingratio{1.0} % Default line spacing
 
-\ProcessOptions
-
-%% KOMA-Script specific settings
-\KOMAoptions{
-    parskip=half,          % Add half-line space between paragraphs
-    headings=normal,       % Normal font for headings
-    abstract=on,           % Include abstract environment
-    DIV=12,                % Page layout optimization (DIV factor)
+\DeclareOption{preprint}{
+  \preprinttrue
+  \reviewfalse
+  \finalfalse
+  \def\@spacingratio{1.0}
 }
 
-%% Use Times-like fonts: newtxtext for text and newtxmath for math
-\let\Bbbk\relax % Suppress previous \Bbbk definition to avoid conflict
+\DeclareOption{review}{
+  \reviewtrue
+  \preprinttrue
+  \finalfalse
+  \def\@spacingratio{1.5}
+}
 
-\RequirePackage[utf8]{inputenc} % Assuming the source is in UTF-8
-\RequirePackage[T1]{fontenc} % T1 font encoding
+\DeclareOption{final}{
+  \finaltrue
+  \preprintfalse
+  \reviewfalse
+  \def\@spacingratio{1.0}
+}
 
-\RequirePackage{newpxtext}
-\RequirePackage{xcolor}
+\DeclareOption{doubleblind}{
+  \doubleblindtrue
+}
 
-\addtokomafont{disposition}{\rmfamily}
+% Default option
+\ExecuteOptions{preprint}
 
-%% Page style definitions
-\pagestyle{plain}
-\pagenumbering{arabic}
+\ProcessOptions\relax
 
-%% Load KOMA-Script dependencies for spacing and layout
-\RequirePackage{scrlayer-scrpage}
-\RequirePackage{geometry}
+% Load necessary packages
+\RequirePackage[T1]{fontenc}
+\RequirePackage{amsmath}    % Advanced maths commands
 \RequirePackage{microtype}
+\RequirePackage{graphicx}
 \RequirePackage{xcolor}
+\RequirePackage{geometry}
+\RequirePackage{fancyhdr}
+\RequirePackage{setspace}
+\RequirePackage{hyperref}
+\RequirePackage{caption}
+\RequirePackage{enumitem}
+\RequirePackage{ragged2e}
 
-%% Support for conditional structures like `if`
-\newcommand\@ifdefinition[3]{\ifdefined#1#2\else#3\fi} % Custom if structure
 
-%% Example: A placeholder for using if-statements and loops (you can modify according to your variables)
-\newcommand\authorTemplate[4]{
-    \textbf{\normalsize $it.name.literal$} % Author name in bold and normal size
-    $if(it.orcid)$~\orcidlink{$it.orcid$}$endif$ % ORCID link if available
-    $for(it.affiliations)$\\\normalsize $it.name$$endfor$ % Affiliations in normal size and normal font
-    \\$if(it.email)$\href{mailto:$it.email$}{\textit{$it.email$}}$endif$ % Email in italic
+% Set page layout
+\geometry{letterpaper, margin=1in}
+
+% Set line spacing
+\setstretch{\@spacingratio}
+
+% Custom commands for title, subtitle, and author
+\newcommand{\misqTitle}{}
+\newcommand{\misqSubtitle}{}
+\newcommand{\misqAuthors}{}
+\newcommand{\misqDate}{\today}
+
+% Title command
+\renewcommand{\title}[1]{\gdef\misqTitle{#1}}
+\renewcommand{\subtitle}[1]{\gdef\misqSubtitle{#1}} % Define subtitle command
+
+% Author command
+\renewcommand{\author}[1]{\gdef\misqAuthors{#1}}
+
+% Date command
+\renewcommand{\date}[1]{\gdef\misqDate{#1}}
+\RequirePackage{newpxtext}  % Times-like font for text
+% \RequirePackage{newtxmath}  % Times-like font for math
+% Maketitle command
+\renewcommand{\maketitle}{
+  \begin{center}
+    {\LARGE \textbf{\misqTitle}\par}  % Title
+    \vskip 1em
+    \ifx\misqSubtitle\empty\else{\large \textit{\misqSubtitle}\par}\fi % Subtitle (if defined)
+    \vskip 1em
+    \ifdoubleblind
+      \textbf{Anonymous Author(s)}  % Anonymous for review
+    \else
+      {\normalsize \misqAuthors\par}  % Authors
+    \fi
+    \vskip 1em
+    {\normalsize \misqDate\par}  % Date
+  \end{center}
+  \thispagestyle{plain}
 }
 
-%% Redefine the maketitle command for the titlepage option (customized for KOMA-Script)
 
-\renewcommand\maketitle{\par
-    \begingroup
-      \renewcommand\thefootnote{\@fnsymbol\c@footnote}%
-      \def\@makefnmark{\rlap{\@textsuperscript{\normalfont\@thefnmark}}}%
-      \long\def\@makefntext##1{\parindent 1em\noindent
-              \hb@xt@1.8em{%
-                \hss\@textsuperscript{\normalfont\@thefnmark}}##1}%
-      \if@twocolumn
-        \ifnum \col@number=\@ne
-          \@maketitle
-        \else
-          \twocolumn[\@maketitle]%
-        \fi
-      \else
-      \newpage
-        \global\@topnum\z@   % Prevents figures from going at top of page.
-        \@maketitle
-      \fi
-      \thispagestyle{plain}\@thanks
-    \endgroup
-    \setcounter{footnote}{0}%
-    \global\let\thanks\relax
-    \global\let\maketitle\relax
-    \global\let\@maketitle\relax
-    \global\let\@thanks\@empty
-    \global\let\@author\@empty
-    \global\let\@date\@empty          % Remove date from the title
-    \global\let\@title\@empty
-    \global\let\title\relax
-    \global\let\author\relax
-    \global\let\date\relax
-    \global\let\and\relax
-  }
+% Header and footer settings
+\pagestyle{fancy}
+\fancyhf{}
 
-%% Define default environment settings and style
-\setlength\arraycolsep{5\p@}
-\setlength\tabcolsep{6\p@}
-\setlength\arrayrulewidth{.4\p@}
-\setlength\doublerulesep{2\p@}
-\setlength\tabbingsep{\labelsep}
+\ifreview
+  \fancyhead[L]{\ifdoubleblind \textit{Confidential Review Copy} \else \textit{\misqTitle}\fi}
+  \fancyfoot[R]{\textit{Review Copy -- Confidential} \hspace{1cm} \textbf{\thepage}}
+\else
+  \iffinal
+    \fancyhead[L]{\textit{Published in MIS Quarterly}}
+    \fancyfoot[C]{\textbf{\thepage}}
+  \else % preprint
+    \fancyhead[L]{\ifdoubleblind \textit{Preprint -- Confidential} \else \textit{\misqTitle}\fi}
+    \fancyfoot[C]{\textbf{\thepage}}
+  \fi
+\fi
 
-\setlength\fboxsep{3\p@}
-\setlength\fboxrule{.4\p@}
+% Remove horizontal rules in header and footer
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
 
-%% Page switching to single-sided for appendix
-\newcommand\switchToOneSided{
-    \KOMAoptions{twoside=false}    % Switch to one-sided mode
+% Section and subsection formatting
+\renewcommand{\section}{
+  \@startsection{section}{1}{0pt}{12pt}{6pt}{\bfseries\Large\centering}
 }
 
-%% Example appendix (can be expanded as needed)
-\newcommand\addAppendix{
-    \switchToOneSided              % Activate one-sided mode before appendix
-    \appendix                      % Start appendix
-    \section{Appendix Title}
-    % Additional appendix content here...
+\renewcommand{\subsection}{
+  \@startsection{subsection}{2}{0pt}{12pt}{6pt}{\bfseries\large\centering}
 }
 
-%% Load default language settings
-\RequirePackage[english]{babel}
-
-%% Bibliography using KOMA-Script's default bibliography handling
-%% Example usage:
-%% \bibliographystyle{plain}
-%% \bibliography{references}  % Use your .bib file here
+\renewcommand{\subsubsection}{
+  \@startsection{subsubsection}{3}{0pt}{12pt}{6pt}{\bfseries\normalsize}
+}
 
 \endinput
-%%
-%% End of file for KOMA-Script's `scrartcl.cls` with newtxtext and newtxmath fonts and conflict fix.
