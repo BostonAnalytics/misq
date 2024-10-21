@@ -1,10 +1,31 @@
 title: Misq
 author: Nakul Padalkar
 version: 1.0.0
+date-format: long
 quarto-required: ">=1.6.0"
+number-sections: true
+pdf-engine: pdflatex
+cite-method: biblatex
+highlight-style: github
 contributes:
   formats:
     pdf:
+      documentclass: misq
+      template: misqtemplate.tex
+      papersize: letter
+      keep_tex: true
+      toc: false
+      template-partials:
+        # Add here the partials your format is using
+        - "partials/title.tex"
+        - "partials/_misq_preamble.tex"
+        - "partials/_misq_authors.tex"
+        - "partials/_misq_abstract.tex"
+      cite-method: natbib
+    html:
       toc: true
-      include-in-header: header.tex
+      html-math-method: katex
+      theme: [yeti, custom.scss]
+    docx:
+      toc: false
 

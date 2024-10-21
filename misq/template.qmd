@@ -1,16 +1,65 @@
 ---
 title: Untitled
+author:
+  - name: Norah Jones
+    affiliations:
+      - id: cmu
+        name: Carnegie Mellon University
+        city: Pittsburgh
+        state: PA
+        country: USA
+      - id: chicago
+        name: University of Chicago
+        city: Chicago
+        state: IL
+        country: USA
+  - name: John Hamm
+    affiliations:
+      - ref: cmu
+      - name: University of California, San Diego
+        city: San Diego
+        state: CA
+        country: USA
+date: last-modified
+# acm-specific metadata
+acm-metadata:
+  # comment this out to make submission anonymous
+  # anonymous: true
+
+  # comment this out to build a draft version
+  final: true
+
+  # comment this out to specify detailed document options
+  # acmart-options: sigconf, review  
+
+  # acm preamble information
+  copyright-year: 2018
+  acm-year: 2018
+  copyright: acmcopyright
+  doi: XXXXXXX.XXXXXXX
+  conference-acronym: "Conference acronym 'XX"
+  conference-name: |
+    Make sure to enter the correct
+    conference title from your rights confirmation emai
+  conference-date: June 03--05, 2018
+  conference-location: Woodstock, NY
+  price: "15.00"
+  isbn: 978-1-4503-XXXX-X/18/06
 format:
   misq-pdf: default
-author: Nakul Padalkar
-date: last-modified
+  misq-html: default
+  misq-docx: default
+
+bibliography: references.bib
+link-citations: true
 ---
 
-## Introduction
+# Introduction
 
 *TODO* Create an example file that demonstrates the formatting and features of your format.
 
-## More Information
+# More Information
 
 You can learn more about controlling the appearance of PDF output here: <https://quarto.org/docs/output-formats/pdf-basics.html>
+
 
