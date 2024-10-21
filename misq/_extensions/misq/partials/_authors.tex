@@ -1,8 +1,0 @@
-$if(doubleblind)$
-  \textbf{Anonymous Author(s)}
-$else$
-  \textbf{\normalsize $it.name.literal$} % Author name in bold
-  $if(it.orcid)$~\orcidlink{$it.orcid$}$endif$ % ORCID link if available
-  $for(it.affiliations)$\\{\small $it.name$}$endfor$ % Affiliations in small font
-  \\$if(it.email)$\href{mailto:$it.email$}{\small\textit{$it.email$}}$endif$ % Email in italics
-$endif$
